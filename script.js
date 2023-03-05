@@ -55,15 +55,17 @@ function generateIcons() {
 
 // adds click event listener to all cards
 function addClickListeners() {
-  for (let card of grid.children) {
-    card.children[0].addEventListener('click', function() {
-      this.classList.toggle('flipped');
-      if (active == null)
-        active = this;
-      else
-        checkMatch(this);
-    });
-  }
+  for (let card of grid.children)
+    card.children[0].addEventListener('click', flipCard);
+}
+
+// flips card and checks for match if applicable
+function flipCard() {
+  this.classList.toggle('flipped');
+  if (active == null)
+    active = this;
+  else
+    checkMatch(this);
 }
 
 // checks if cards match and animates as fit
@@ -90,8 +92,8 @@ function checkMatch(current) {
     setTimeout(function() {
       activeFront.classList.remove('matched');
       currentFront.classList.remove('matched');
-      active.removeEventListener('click', checkMatch);
-      current.removeEventListener('click', checkMatch);
+      active.removeEventListener('click', flipCard);
+      current.removeEventListener('click', flipCard);
       active = null;
     }, 1250);
   }
